@@ -6,7 +6,6 @@
 5. Make sure the input cursor shows on a new line
 """
 
-# 1. Create a greeting for the program:
 print("Hello, and welcome to the Random Band Name Generator!")
 city = input("Please input the city you grew up in: \n")
 pet = input("And how about the name of a pet: \n")
