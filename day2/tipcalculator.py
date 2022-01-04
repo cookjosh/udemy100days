@@ -1,5 +1,5 @@
 """ 
-Udemy 100 Days of Code (Python) - Day 3 Tip Calculator
+Udemy 100 Days of Code (Python) - Day 2 Tip Calculator
 1. Greet the user
 2. Ask for total bill
 3. Give 3 percentage tip options and take user input
