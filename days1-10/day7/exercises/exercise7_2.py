@@ -1,4 +1,4 @@
-# Exercise 7.1 - Check if user guess is in randomly selected word
+# Exercise 7.2
 # Build up to hangman game
 
 import random
