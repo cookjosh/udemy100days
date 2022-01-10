@@ -1,4 +1,5 @@
 # Exercise 7.1 - Check if user guess is in randomly selected word
+# Build up to hangman game
 
 import random
 word_list = ["aardvark", "baboon", "camel"]
@@ -7,10 +8,11 @@ word_list = ["aardvark", "baboon", "camel"]
 random_word = word_list[random.randint(0,2 )]
 
 # Ask the user to guess a letter and assign their answer to a variable called guess. Make guess lowercase.
-guess = input("Guess a random letter! ")
+guess = input("Guess a random letter! ").lower()
 
 # Check if the letter the user guessed (guess) is one of the letters in the chosen_word.
-if guess in random_word:
-  print("Good guess!")
-else:
-  print("Sorry!")
+for letter in random_word:
+    if guess == letter:
+        print("Good guess!")
+    else:
+        print("Sorry!")
