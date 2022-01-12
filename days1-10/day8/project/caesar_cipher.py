@@ -5,10 +5,9 @@ from art import logo
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
 user_response = "yes"
-while user_response == "yes":
 
+while user_response == "yes":
     print(f"{logo}\n")
 
     direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
@@ -41,15 +40,20 @@ while user_response == "yes":
     def caesar(direction, text, shift):
         new_word = ""
         for i in text:
-            if type(i) == "int" or i == " ":
+            if i.isdigit() == True or i == " ":
                 new_word += i
                 continue
             else:
                 old_index = alphabet.index(i)
-                if direction == "encode":
-                    new_index = old_index + shift
-                elif direction == "decode":
-                    new_index = old_index - shift
+                if shift > 25 and direction == "encode":
+                    new_index = old_index + (shift % 26)
+                elif shift > 25 and direction == "decode":
+                    new_index = old_index - (shift % 26)
+                else: # probably room for improvement in here as I'm almost repeating parts of code based on direction...
+                    if direction == "encode":
+                        new_index = old_index + shift
+                    elif direction == "decode":
+                        new_index = old_index - shift
             new_word += alphabet[new_index]
         print(new_word)
 
