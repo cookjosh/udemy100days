@@ -1,7 +1,10 @@
 # Udemy 100 Days of Code - Day 10 Project
 # Calculator
-import operator
 
+import operator
+from art import logo
+
+print(logo)
 
 def calculation(number_one):
   print("+\n-\n*\n/")
@@ -21,13 +24,10 @@ def calculation(number_one):
   continue_calculating = input(f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation: ")
   if continue_calculating == "y":
     number_one = result
-    return number_one
+    calculation(number_one)
   else:
     return continue_calculating
 
 number_one = int(input("What's the first number?: "))
 
-continue_calculating = "y"
-
-while continue_calculating == "y":
-  calculation(number_one)
+calculation(number_one)
