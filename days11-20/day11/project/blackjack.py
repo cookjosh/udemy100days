@@ -1,5 +1,6 @@
 # Udemy 100 Days of Code - Day 11
 # blackjack.py
+import art
 import random
 from os import system, name
 from time import sleep
@@ -11,6 +12,8 @@ def clear():
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
+
+print(art.logo)
 
 start_game = input("Would you like to play Blackjack? Y or N: ").lower()
 
