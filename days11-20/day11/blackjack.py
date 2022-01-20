@@ -62,10 +62,10 @@ while start_game == "y":
 
         if user_score > 21:
             print("Bust, you lose!")
-            game_over = True
+            break # Should these be replaced with 'break' statements? These don't seem to work to break loop
         elif dealer_score > 21:
             print("Dealer busts, you win!")
-            game_over = True
+            break
 
         print(f"Your cards: {user_hand}, current score: " + str(user_score))
         print(f"Dealers up card: {dealer_hand[1]}")
@@ -73,10 +73,10 @@ while start_game == "y":
         if user_score == 21:
             if dealer_score == 21:
                 print("Dealer has Blackjack! You lose.")
-                game_over = True
+                break
             else:
                 print("Blackjack! You win.")
-                game_over = True
+                break
 
         while user_score <= 21:
             user_play = input("Would you like to hit or stay?: ").lower()
@@ -87,33 +87,38 @@ while start_game == "y":
                 user_score += user_next_card
                 print(f"Your updated hand: {user_hand}, and updated score: {user_score}")
                 if user_score > 21:
-                    print("Bust, you lose.") # End game at this point, currently does not
-                    game_over = True
+                    break
             elif user_play == "stay":
                 break
+
+        if user_score > 21:
+            print("Bust, you lose!")
+            break
 
         while dealer_score <= 16:
             dealer_next_card = cards[random.randint(0, (len(cards) - 1))]
             cards.remove(dealer_next_card)
             dealer_hand.append(dealer_next_card)
             dealer_score += dealer_next_card
-            if dealer_score > 21:
-                print("Dealer busts! You win.")
-                game_over = True
+        
+        if dealer_score > 21:
+            print("Dealer busts! You win.")
+            break
 
         print(f"Your updated hand: {user_hand}, and updated score: {user_score}")
         print(f"Dealers updated hand: {dealer_hand}, and updated score: {dealer_score}")
 
         # Compare scores - needs fix to end game early if dealer or user has already broken 21
-        if user_score > dealer_score:
+        
+        if user_score > dealer_score and user_score != 21:
             print("You win!")
-            game_over = True
+            break
         elif user_score < dealer_score:
             print("Dealer wins!")
-            game_over = True
+            break
         elif user_score == dealer_score:
             print("Tie, dealer wins!")
-            game_over = True
+            break
 
     start_game = input("Would you like to play again? Y or N: ").lower()
     clear()
