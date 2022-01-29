@@ -24,24 +24,32 @@ first_selection_info = first_selection()
 second_selection_info = next_selection()
 comparison_string = f"{first_selection_info['name']} has {first_selection_info['follower_count']} followers and {second_selection_info['name']} has {second_selection_info['follower_count']} followers."
 
+game_on = True
+while game_on == True:
+    if first_selection_info == second_selection_info:
+        while first_selection_info == second_selection_info:
+            second_selection_info = next_selection()
 
-if first_selection_info == second_selection_info:
-    while first_selection_info == second_selection_info:
-        second_selection_info = next_selection()
-
-set_comparison()
-user_response = input("Who has more followers? Type 'A' or 'B': ").lower()
-if first_selection_info["follower_count"] > second_selection_info["follower_count"]:
-    if user_response == "a":
-        print("You win!")
-        print(f"{comparison_string}")
-    else:
-        print("You lose!")
-        print(f"{comparison_string}")
-elif first_selection_info["follower_count"] < second_selection_info["follower_count"]:
-    if user_response == "b":
-        print("You win!")
-        print(f"{comparison_string}")
-    else:
-        print("You lose!")
-        print(f"{comparison_string}")
+    set_comparison()
+    user_response = input("Who has more followers? Type 'A' or 'B': ").lower()
+    if first_selection_info["follower_count"] > second_selection_info["follower_count"]:
+        if user_response == "a":
+            print("You win!")
+            print(f"{comparison_string}")
+            second_selection_info = next_selection()
+            comparison_string = f"{first_selection_info['name']} has {first_selection_info['follower_count']} followers and {second_selection_info['name']} has {second_selection_info['follower_count']} followers."
+        else:
+            print("You lose!")
+            print(f"{comparison_string}")
+            game_on = False
+    elif first_selection_info["follower_count"] < second_selection_info["follower_count"]:
+        if user_response == "b":
+            print("You win!")
+            print(f"{comparison_string}")
+            first_selection_info = second_selection_info
+            second_selection_info = next_selection()
+            comparison_string = f"{first_selection_info['name']} has {first_selection_info['follower_count']} followers and {second_selection_info['name']} has {second_selection_info['follower_count']} followers."
+        else:
+            print("You lose!")
+            print(f"{comparison_string}")
+            game_on = False
