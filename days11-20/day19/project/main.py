@@ -4,51 +4,59 @@ from turtle import Turtle, Screen
 screen = Screen()
 
 player_bet = (screen.textinput("Place your bet!", "Which color do you want to bet on:")).lower()
-
-# Create function for making turtles
 turtles = []
-leo = Turtle()
-leo.color("blue")
-turtles.append(leo)
-leo.shapesize(3, 3, 3)
-leo.penup()
-leo.setx(-925)
-leo.sety(600)
-raph = Turtle()
-raph.color("red")
-turtles.append(raph)
-raph.shapesize(3, 3, 3)
-raph.penup()
-raph.setx(-925)
-raph.sety(200)
-don = Turtle()
-don.color("purple")
-turtles.append(don)
-don.shapesize(3, 3, 3)
-don.penup()
-don.setx(-925)
-don.sety(-200)
-mike = Turtle()
-mike.color("orange")
-turtles.append(mike)
-mike.shapesize(3, 3, 3)
-mike.penup()
-mike.setx(-925)
-mike.sety(-600)
+color_list = ["blue", "red", "purple", "orange"]
 
-# Create conditions to stop movement while still on screen
-# Also end when first turtle hits edge
+def make_turtle(name):
+    name = Turtle()
+    turtles.append(name)
+    name.shapesize(3, 3, 3)
+    name.penup()
+    name.speed("fast")
+    return name
+
+for x in range(0, 4):
+    turtle_name = input("What's your turtle's name? (max 4!): ")
+    turtle = make_turtle(turtle_name)
+    turtle.color(color_list[x])
+    if x == 0:
+        turtle.setx(-925)
+        turtle.sety(600)
+    elif x == 1:
+        turtle.setx(-925)
+        turtle.sety(200)
+    elif x == 2:
+        turtle.setx(-925)
+        turtle.sety(-200)
+    elif x == 3:
+        turtle.setx(-925)
+        turtle.sety(-600)
+
+
+ending_order = []
 for name in turtles:
     while name.xcor() <= 950:
-        for name in turtles:
-            name.forward(random.randint(1, 30))
-            name.xcor()
+        if name.xcor() == 950:
+            ending_order.append(name)
+            break
+        else:   
+            for name in turtles:
+                forward_spaces = random.randint(1, 30)
+                if name.xcor() + forward_spaces > 950:
+                    forward_spaces = 950 - name.xcor()
+                    ending_order.append(name)
+                    break
+                name.forward(forward_spaces)
+                name.xcor()
 
+winning_turtle = ending_order[0]
+winning_color = winning_turtle.color()
 
-
-
-
-
+if player_bet == winning_color[1]:
+    print(f"Congrats! {player_bet} won. You won your bet!")
+else:
+    print(f"Sorry...{winning_color[1]} won. You lost your bet!")
+        
 
 screen.listen()
 screen.exitonclick()
