@@ -1,6 +1,7 @@
 from operator import le
 import paddle
 import turtle
+from ball import Ball
 from paddle import Paddle
 from turtle import Screen, Turtle
 
@@ -12,6 +13,8 @@ screen.setup(width=800, height=600)
 
 right_paddle = Paddle(350)
 left_paddle = Paddle(-350)
+ball = Ball()
+
 
 
 screen.onkeypress(right_paddle.move_up, "Up")
@@ -22,6 +25,7 @@ screen.listen()
 
 game_on = True
 while game_on == True:
+    ball.move(0, 0)
     screen.update()
 
 

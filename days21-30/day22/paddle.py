@@ -7,7 +7,7 @@ class Paddle(Turtle):
         self.penup()
         self.setx(xcoord)
         self.shape("square")
-        self.turtlesize(stretch_wid=1, stretch_len=4)
+        self.turtlesize(stretch_wid=1, stretch_len=5)
         self.fillcolor("white")
         self.setheading(90)
 
