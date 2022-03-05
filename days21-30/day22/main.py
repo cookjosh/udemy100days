@@ -25,8 +25,10 @@ screen.listen()
 
 game_on = True
 while game_on == True:
-    ball.move(0, 0)
+    ball.move()
     screen.update()
+    if ball.ycor() > 290 or ball.ycor() < -290:
+        ball.bounce()
 
 
 
