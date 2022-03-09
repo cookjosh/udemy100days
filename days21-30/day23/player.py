@@ -8,6 +8,7 @@ class Player(Turtle):
         self.shapesize(2, 2)
         self.sety(ycoord)
         self.setheading(90)
+        self.starting_position = (0, -580)
 
     def move_up(self):
         self.forward(50)
@@ -24,3 +25,6 @@ class Player(Turtle):
         x_coord = self.xcor()
         y_coord = self.ycor()
         self.setposition(x_coord, y_coord + 50)
+
+    def reset_player(self):
+        self.goto(self.starting_position)

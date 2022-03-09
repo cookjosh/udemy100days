@@ -1,23 +1,27 @@
-from random import randint
+import random
 from turtle import Turtle
 
 colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-color_index = randint(0, 5)
 
 class Cars(Turtle):
-    def __init__(self, xcoord):
-        super().__init__()
-        self.penup()
-        self.setx(xcoord)
-        self.sety(randint(-580, 580))
-        self.shape("square")
-        self.turtlesize(stretch_wid=2, stretch_len=8)
-        self.setheading(180)
-        self.color(colors[color_index])
-        self.x_move = -50
-        self.speed("slowest")
+    def __init__(self):
+        self.car_list = []
 
+    def create_car(self, xcoord):
+        random_chance = random.randint(1, 6) # random chance method borrowed from course
+        if random_chance == 1:
+            new_car = Turtle()
+            new_car.penup()
+            new_car.setx(xcoord)
+            new_car.sety(random.randint(-450, 500))
+            new_car.shape("square")
+            new_car.turtlesize(stretch_wid=2, stretch_len=8)
+            new_car.setheading(180)
+            new_car.color(random.choice(colors))
+            new_car.x_move = -50
+            new_car.speed("slowest")
+            self.car_list.append(new_car)
 
     def move(self):
-        new_x = self.xcor() + self.x_move
-        self.goto(new_x, self.ycor())
+        for car in self.car_list:
+            car.forward(50)
