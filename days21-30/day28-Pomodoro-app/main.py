@@ -14,24 +14,47 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
-    canvas.create_text(253, 175, text="00:00", fill="white", font=(FONT_NAME, 14, "bold"))
+    window.after_cancel(timer)
+    canvas.itemconfig(time_text, text="00:00")
+    canvas_label.config(text="Pomodoro Timer")
+    checkmark_label.config(text="")
+    global reps
+    reps = 0
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    countdown(1500)
+    global reps
+    reps += 1
+    
+    if reps % 2 == 0:
+        countdown(3)
+        canvas_label.config(text="Break", fg=YELLOW)
+    elif reps % 8 == 0:
+        countdown(5)
+        canvas_label.config(text="Long Break", fg=PINK)
+    else:
+        countdown(10)
+        canvas_label.config(text="Work, bitch", fg="white")
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def countdown(count):
     minutes = math.floor(count / 60)
     seconds = count % 60
+    if count < 10:
+        seconds = f"0{count}"
     canvas.itemconfig(time_text, text=f"{minutes}:{seconds}")
-    if count == 1500:
-        canvas.itemconfig(time_text, text=f"{minutes}:{seconds}0")
-        window.after(1000, countdown, count - 1)
-    elif count > 0:
-        window.after(1000, countdown, count - 1)
-
+    if count > 0:
+        timer = window.after(1000, countdown, count - 1)
+    else:
+        start_timer()
+        check_marks = ""
+        sessions = math.floor(reps/2)
+        for _ in range(sessions):
+            check_marks += "✓"
+        checkmark_label.config(text=check_marks)
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro Timer")
@@ -50,7 +73,6 @@ canvas_label.grid(column=1, row=0)
 
 checkmark_label = Label(text="✓", font=(FONT_NAME, 20, "bold"), fg=RED, bg=GREEN)
 checkmark_label.grid(column=1, row=2)
-
 
 # Button things
 start_button = Button(text="Start", command=start_timer)
