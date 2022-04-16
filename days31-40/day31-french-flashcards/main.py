@@ -20,22 +20,24 @@ translation_dict = translation_data.to_dict(orient="records")
 
 word_set = (random.choice(translation_dict))
 french_word = word_set["French"]
-english_word = word_set["English"]
 
 def change_canvas():
     main_canvas.itemconfig(canvas_image, image=back_image)
-    language_label.config(text="english", fg="white", bg=BACKGROUND_COLOR)
+    language_label.config(text=word_set["English"], fg="white", bg=BACKGROUND_COLOR)
     word_label.config(text=english_word, fg="white", bg=BACKGROUND_COLOR)
     
 
 # Choosing random word for card
 def random_word():
-    global card_timer
+    global card_timer, canvas_image, word_set
     window.after_cancel(card_timer)
     word_set = (random.choice(translation_dict)) 
     word_label.config(text=word_set["French"])
     language_label.config(text="french")
+    english_word = word_set["English"]
+    main_canvas.itemconfig(canvas_image, image=front_image)
     window.after(3000, change_canvas)
+    return english_word
 
 
 # Canvas for card and back image setup
