@@ -1,3 +1,7 @@
+# Day 34 - Trivia Game using Open Trivia DB API
+# Most of code is from course as opposed to what I wrote in Day 17
+# Reason for this is to practice the tkinter and API portions of revising this project
+
 from question_model import Question
 from data import question_data
 from quiz_brain import QuizBrain
