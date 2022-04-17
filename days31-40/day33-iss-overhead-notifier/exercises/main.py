@@ -1,6 +1,5 @@
 from datetime import datetime
 import requests
-import smtplib
 
 # Basic REST API request practice
 """
@@ -28,6 +27,6 @@ response = requests.get(
 )
 response.raise_for_status()
 response_results = (response.json())["results"]
-sunrise_time = response_results["sunrise"]
-sunset_time = response_results["sunset"]
+sunrise_time = response_results["sunrise"].split("T")[1].split(":")[0]
+sunset_time = response_results["sunset"].split("T")[1].split(":")[0]
 print(sunrise_time, sunset_time)
