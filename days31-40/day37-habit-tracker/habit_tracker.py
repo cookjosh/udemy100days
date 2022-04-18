@@ -1,4 +1,8 @@
 # Day 37 Project - Habit Tracker
+# Did not create functionality to use this without editing the code
+# Simply used this to practice using requests methods
+
+
 import datetime as dt
 from turtle import up
 import requests
