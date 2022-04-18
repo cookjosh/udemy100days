@@ -4,7 +4,7 @@
 
 
 import datetime as dt
-from turtle import up
+import os
 import requests
 
 now = dt.datetime.now()
@@ -12,7 +12,7 @@ today = now.strftime("%Y%m%d")
 
 users_url = "https://pixe.la/v1/users"
 users_data = {
-    "token": "qccf38yWZujwn4TeFPsE6sVN",
+    "token": os.environ["PIXELA_API_TOKEN"],
     "username": "udemytest1",
     "agreeTermsOfService": "yes",
     "notMinor": "yes",
