@@ -1,4 +1,5 @@
 #This file will need to use the DataManager,FlightSearch, FlightData, NotificationManager classes to achieve the program requirements.
+from unittest import result
 import data_manager
 import flight_data
 import flight_search
@@ -20,6 +21,10 @@ for city in city_list:
     sheet_object_id += 1
 
 result_cities = flight_search_result.oneway_flight_search()
-print(flight_info.relevant_cities) # This list is cities from the G sheet
-print(result_cities) # This list needs to turn into a dict with flight price as value for each key
-# These two lists need to be compared for matching values
+
+relevant_oneway_flights = {k: v for k,v in result_cities.items() if k in flight_info.relevant_cities}
+if relevant_oneway_flights == {}:
+    print("No oneway flights to desired cities in the next 6 months")
+else:
+    for k,v in relevant_oneway_flights.items():
+        print(f"{k}: ${v}")

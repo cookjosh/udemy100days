@@ -1,5 +1,4 @@
 import datetime
-from enum import unique
 import requests
 from dateutil.relativedelta import relativedelta
 
@@ -30,5 +29,4 @@ class FlightData:
         #unique_oneway_list = list(destination_set)
         #return (unique_oneway_list)
         return oneway_destinations
-data = FlightData()
-print(data.oneway_flight_search())
+
