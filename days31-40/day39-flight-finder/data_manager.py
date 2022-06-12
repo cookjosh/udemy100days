@@ -4,7 +4,7 @@ import requests
 class DataManager:
     #This class is responsible for talking to the Google Sheet.
     sheet_url = "https://api.sheety.co/f16849ca4ad6901b130f707cd640040d/copyOfFlightDeals/prices"
-    sheet_token = "PyT9AAD8f2jFxLFX9Gqo5QTm"
+    sheet_token = "{{API TOKEN}}"
     sheet_headers = f"Authorization: Bearer {sheet_token}"
     sheet_edit_url = "https://api.sheety.co/f16849ca4ad6901b130f707cd640040d/copyOfFlightDeals/prices/"
 
