@@ -10,7 +10,7 @@ class FlightData:
     flight_url = "https://tequila-api.kiwi.com/v2/search"
     flight_headers = {
         "accept": "application/json",
-        "apikey": "pbjyPOypPVvAot8MBPJHqDby7jO_WNAC",
+        "apikey": "{{API TOKEN}}",
     }
     flight_data = {
         "fly_from": "LON",

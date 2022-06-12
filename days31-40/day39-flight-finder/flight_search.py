@@ -6,7 +6,7 @@ class FlightSearch:
     search_url = "https://tequila-api.kiwi.com/locations/query"
     search_headers = {
         "accept": "application/json",
-        "apikey": "pbjyPOypPVvAot8MBPJHqDby7jO_WNAC",
+        "apikey": "{{API TOKEN}}",
     }
 
     def citysearch(self, city):
