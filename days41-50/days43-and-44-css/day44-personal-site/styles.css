@@ -25,6 +25,10 @@ h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
+.bottom-cloud {
+    position: absolute;
+}
+
 .bottom-container {
     background-color: #F2F2F2;
 }
@@ -34,26 +38,33 @@ h3 {
 }
 
 .hardskill-image {
+    float: left;
     height: 200px;
-    width: 200px;
-}
-
-.softskill-image {
-    height: 200px;
-    width: 200px;
+    padding-right: 30px;
+    width: 25%;
 }
 
 .middle-container {
     background-color: #F2F2F2;
 }
 
+.skill-row {
+    line-height: 2;
+    margin: 100px auto 100px auto;
+    text-align: left;
+    width: 50%;
+}
+
+.softskill-image {
+    float: right;
+    height: 200px;
+    padding-left: 30px;
+    width: 25%;
+}
+
 .top-container {
     background-color: #F2F2F2;
     padding-top: 50px;
-}
-
-.bottom-cloud {
-    position: absolute;
 }
 
 .top-cloud {
