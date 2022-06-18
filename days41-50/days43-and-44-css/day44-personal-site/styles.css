@@ -25,16 +25,41 @@ h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
+hr {
+    border: dotted #66BFBF 10px;
+    border-bottom: none;
+    margin: 50px auto 50px auto;
+    width: 5%;
+}
+
 .bottom-cloud {
     position: absolute;
 }
 
 .bottom-container {
-    background-color: #F2F2F2;
+    background-color: #66BFBF;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+.btn {
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
+    margin: 50px;
+    padding: 15px;
+}
+
+.contact-details {
+    padding-bottom: 20px;
+}
+
+.copyright-footer {
+    color: #EAF6F6;
 }
 
 .footer-link {
     color: #11999E;
+    padding: 10px;
 }
 
 .hardskill-image {
@@ -46,6 +71,8 @@ h3 {
 
 .middle-container {
     background-color: #F2F2F2;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .skill-row {
@@ -63,7 +90,7 @@ h3 {
 }
 
 .top-container {
-    background-color: #F2F2F2;
+    background-color: #EAF6F6;
     padding-top: 50px;
 }
 
