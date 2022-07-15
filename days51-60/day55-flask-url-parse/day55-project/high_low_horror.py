@@ -21,9 +21,8 @@ def header_decorator(function):
 
 # Routes
 @app.route("/")
-@header_decorator
 def homepage():
-    return "Guess a number between 0 and 9!" \
+    return "<h1>Guess a number between 0 and 9!</h1>" \
         "<br>" \
         "<img src='https://media.giphy.com/media/3o7TKSxdQJIoiRXHl6/giphy.gif' width=400>"
 
