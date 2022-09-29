@@ -13,6 +13,7 @@ def home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    form.validate_on_submit()
     return render_template('login.html', form=form)
 
 
