@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Login</title>
+	</head>
+	<body>
+        <div class="container">
+		<h1>Login</h1>
+		<form method="POST", action="/">
+        	{{ form.csrf_token }}
+			<p>
+			Email:
+			{{ form.email(size=30) }}
+			Password:
+			{{ form.password(size=30) }}
+			<button class="login button" type="button">Login</button>
+			</p>
+		</form>
+        </div>
+	</body>
+</html>
