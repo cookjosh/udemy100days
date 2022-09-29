@@ -13,7 +13,7 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=['POST', 'GET'])
 def contact():
     return render_template('contact.html')
 
@@ -27,13 +27,13 @@ def post(index):
 
 @app.route('/form-entry')
 def form_data():
-    data = {
-        'username': request.form.get('username'),
-        'email': request.form.get('email'),
-        'phone_number': request.form.get('phone_number'),
-        'message': request.form.get('message'),
-    }
-    return "<h1>Successfully sent your message!</h1>"
+    data = request.form
+    print(data)
+    print(data["name"])
+    print(data["email"])
+    print(data["phone"])
+    print(data["message"])
+    return render_template('form-entry.html')
     
 
 
