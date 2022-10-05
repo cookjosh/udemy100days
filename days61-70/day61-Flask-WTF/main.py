@@ -26,6 +26,10 @@ def create_app():
                 return render_template('denied.html')
         return render_template('login.html', form=form)
 
+    @app.route("/add")
+    def add():
+        return render_template('add.html')
+
     return app
 
 if __name__ == '__main__':
