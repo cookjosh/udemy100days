@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, SelectField
+from wtforms.validators import DataRequired, URL
 import csv
 
 app = Flask(__name__)
@@ -12,6 +12,12 @@ Bootstrap(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
+    cafe_location = StringField('Cafe Location on Google Maps (URL)', validators=[DataRequired(), URL()] )
+    open_time = StringField('Open Time (e.g. 8AM)', validators=[DataRequired()])
+    close_time = StringField('Closing Time (e.g. 6PM)', validators=[DataRequired()])
+    coffee_rating = SelectField('Coffee Rating ☕️', choices=[(1, "☕️"), ("☕️☕️", "☕️☕️"), ("☕️☕️☕️", "☕️☕️☕️"), ("☕️☕️☕️☕️", "☕️☕️☕️☕️"), ("☕️☕️☕️☕️☕️", "☕️☕️☕️☕️☕️")] ,validators=[DataRequired()])
+    wifi_rating = SelectField('Wifi Rating 💪', choices=[("💪", "💪"), ("💪💪", "💪💪"), ("💪💪💪", "💪💪💪"), ("💪💪💪💪", "💪💪💪💪"), ("💪💪💪💪💪", "💪💪💪💪💪")], validators=[DataRequired()])
+    power_rating = SelectField('Power Availability Rating 🔌', choices=[("🔌", "🔌"), ("🔌🔌", "🔌🔌"), ("🔌🔌🔌", "🔌🔌🔌"), ("🔌🔌🔌🔌", "🔌🔌🔌🔌"), ("🔌🔌🔌🔌🔌", "🔌🔌🔌🔌🔌")], validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # Exercise:
@@ -29,7 +35,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
