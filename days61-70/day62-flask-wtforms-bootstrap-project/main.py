@@ -1,3 +1,4 @@
+from symbol import power
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -39,10 +40,15 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
+        cafe_name = form.cafe.data
+        cafe_location = form.cafe_location.data
+        open_time = form.open_time.data
+        close_time = form.close_time.data
+        coffee_rating = form.coffee_rating.data
+        wifi_rating = form.wifi_rating.data
+        power_rating = form.power_rating.data
+        with open('cafe-data.csv', 'a') as csv_file:
+            csv_file.write(f'{cafe_name},{cafe_location},{open_time},{close_time},{coffee_rating},{wifi_rating},{power_rating} \n')
     return render_template('add.html', form=form)
 
 
