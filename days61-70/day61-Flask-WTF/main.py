@@ -9,7 +9,7 @@ def create_app():
     
 
 
-    app.secret_key = "password"
+    app.secret_key = {{SECRET_KEY}}
 
 
     @app.route("/")
