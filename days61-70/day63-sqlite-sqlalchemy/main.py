@@ -37,10 +37,22 @@ def add():
         return redirect(url_for('home'))
     return render_template('add.html')
 
-@app.route('/edit')
-def edit():
-    return render_template('edit.html')
+@app.route('/edit', methods=['GET', 'POST'])
+def edit(book=None):
+    book = Book.query.filter_by(id=(request.args.get('id'))).first()
+    if request.method == 'POST':
+        new_rating = request.form.get('new_rating')
+        book.rating = new_rating
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('edit.html', book=book)
 
+@app.route('/delete')
+def delete():
+    book_id = request.args.get('id')
+    db.session.delete(Book.query.get(book_id))
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

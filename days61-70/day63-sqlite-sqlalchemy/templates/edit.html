@@ -6,7 +6,16 @@
     </head>
     <body>
         <h1>Edit Rating!</h1>
-
+        <p>Book Title: {{ book.title }}</p>
+        <p>Current Rating: {{ book.rating }}</p>
+        <form action="" method="POST">
+            <label>Updated Rating</label>
+            <input type="text" name="new_rating">
+            <a href="{{ url_for('home') }}">
+                <button type="submit">Update Rating!</button>
+            </a>
+            
+        </form>
 
     </body>
 </html>
