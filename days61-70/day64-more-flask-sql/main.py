@@ -39,19 +39,32 @@ movie_poster_url = "https://image.tmdb.org/t/p/original"
 
 @app.route("/")
 def home():
-    return render_template("index.html", movies=db.session.query(Movies).all())
+    movies=Movies.query.order_by(Movies.rating).all()
+    for i in range(len(movies)):
+        movies[i].ranking = len(movies) - i
+    db.session.commit()
+    return render_template("index.html", movies=movies)
 
 @app.route("/edit", methods=['GET', 'POST'])
 def edit(movie=None):
     form = UpdateForm()
     movie = Movies.query.filter_by(id=(request.args.get('id'))).first()
     if form.validate_on_submit():
-        rating = form.rating.data
-        review = form.review.data
-        movie.rating = rating
-        movie.review = review
-        db.session.commit()  
-        return redirect(url_for('home'))
+        if movie == None:
+            movie = Movies.query.order_by(Movies.id.desc()).first()
+            rating = form.rating.data
+            review = form.review.data
+            movie.rating = rating
+            movie.review = review
+            db.session.commit()  
+            return redirect(url_for('home'))
+        else:
+            rating = form.rating.data
+            review = form.review.data
+            movie.rating = rating
+            movie.review = review
+            db.session.commit()  
+            return redirect(url_for('home'))
     return render_template("edit.html", form=form)
 
 @app.route("/delete")
