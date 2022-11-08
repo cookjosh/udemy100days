@@ -22,6 +22,9 @@ class User(UserMixin, db.Model):
 #Line below only required once, when creating DB. 
 # db.create_all()
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 @app.route('/')
 def home():
@@ -34,20 +37,30 @@ def register():
         username = request.form.get("name")
         user_email = request.form.get("email")
         password_hash = generate_password_hash(request.form.get("password"), "pbkdf2:sha256")
-        db.session.add(User(email = user_email, password = password_hash, name = username))
+        new_user = User(email = user_email, password = password_hash, name = username)
+        db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for("secrets", username = username))
+        login_user(new_user)
+        return redirect(url_for("secrets"))
     return render_template("register.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        email = request.form.get("name")
+        current_user = db.session.query.filter_by(email=email).first()
+        if check_password_hash(current_user.password, request.form.get("password")):
+            login_user(current_user)
+            return redirect(url_for("secrets"))
     return render_template("login.html")
 
 
-@app.route('/secrets/<username>')
-def secrets(username):
-    return render_template("secrets.html", username = username)
+@app.route('/secrets')
+@login_required
+def secrets():
+    print(current_user.name)
+    return render_template("secrets.html", username = current_user.name)
 
 
 @app.route('/logout')
@@ -56,6 +69,7 @@ def logout():
 
 
 @app.route('/download')
+@login_required
 def download():
     return send_from_directory(f"{app.root_path}/static/files", "cheat_sheet.pdf")
 
