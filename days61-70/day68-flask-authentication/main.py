@@ -35,25 +35,44 @@ def home():
 def register():
     if request.method == "POST":
         username = request.form.get("name")
-        user_email = request.form.get("email")
+        email = request.form.get("email")
         password_hash = generate_password_hash(request.form.get("password"), "pbkdf2:sha256")
-        new_user = User(email = user_email, password = password_hash, name = username)
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user)
-        return redirect(url_for("secrets"))
+        active_user = db.session.query(User).filter(User.email == email).first()
+        if active_user:
+            flash("Email already in use!")
+            return redirect(url_for("register"))
+        else:
+            new_user = User(email = email, password = password_hash, name = username)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for("secrets", logged_in = True))
     return render_template("register.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    error = None
+    all_users = db.session.query(User).all()
+    all_usernames = []
+    for user in all_users:
+        all_usernames.append(user.email)
+    print(all_usernames)
     if request.method == "POST":
-        email = request.form.get("name")
-        current_user = db.session.query.filter_by(email=email).first()
-        if check_password_hash(current_user.password, request.form.get("password")):
-            login_user(current_user)
-            return redirect(url_for("secrets"))
-    return render_template("login.html")
+        email = request.form.get("email")
+        if email not in all_usernames:
+            flash("Username not found")
+            return redirect(url_for("login"))
+        else:
+            active_user = db.session.query(User).filter(User.email == email).first()
+            if check_password_hash(active_user.password, request.form.get("password")):
+                login_user(active_user)
+                flash("Successful login!")
+                return redirect(url_for("secrets", logged_in = True))
+            else:
+                flash("Incorrect Username or Password")
+                return redirect(url_for("login"))
+    return render_template("login.html", error=error)
 
 
 @app.route('/secrets')
