@@ -8,6 +8,8 @@ from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import CreatePostForm, LoginForm, RegistrationForm
 from flask_gravatar import Gravatar
+from functools import wraps
+from flask import abort
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -27,7 +29,8 @@ login_manager.init_app(app)
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.String(250), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    author = relationship("User", back_populates="posts")
     title = db.Column(db.String(250), unique=True, nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
@@ -40,8 +43,19 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
     name = db.Column(db.String(250), nullable=False)
+    blog_posts = relationship("BlogPost", back_populates="author")
+
 
 db.create_all()
+
+def admin_only(func):
+    @wraps(func)
+    def function_to_decorate(*args, **kwargs):
+        user_id = current_user.id
+        if user_id == 1:
+            function_to_decorate(*args, **kwargs)
+        else:
+            return abort(403)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -100,6 +114,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('get_all_posts'))
 
 
@@ -120,6 +135,7 @@ def contact():
 
 
 @app.route("/new-post")
+@admin_only
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -138,6 +154,7 @@ def add_new_post():
 
 
 @app.route("/edit-post/<int:post_id>")
+@admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
     edit_form = CreatePostForm(
@@ -160,6 +177,7 @@ def edit_post(post_id):
 
 
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete_post(post_id):
     post_to_delete = BlogPost.query.get(post_id)
     db.session.delete(post_to_delete)

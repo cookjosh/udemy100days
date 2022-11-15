@@ -84,7 +84,8 @@ def secrets():
 
 @app.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for("get_all_posts"))
 
 
 @app.route('/download')
